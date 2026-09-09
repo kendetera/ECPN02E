@@ -23,10 +23,10 @@ $catalog = [
     'perfumes' => [
         'type' => 'perfume',
         'products' => [
-            ['Burberry', 1200], ['Chanel', 3200], ['Coach', 3300], ['D & G', 2200], ['Dune', 2000], ['Gucci', 3200],
-            ['Obsession', 1500], ['Versace', 2100], ['Zara', 1100], ['Coco Chanel', 3000], ['Jo Malone', 4200], ['Miss Dior', 2280],
-            ['N & R', 2900], ['Vera Wang', 1900], ['B & F', 1200], ['Catch Me', 3800], ['Infinity', 1600], ['Daisy', 1200],
-            ['Escada', 3330], ['Amouage', 1990], ['Run Wild', 3000], ['Jimmy Choo', 5200], ['Polo', 2200], ['Hermes', 2900],
+            ['Amouage Interlude', 1200], ['Club de Nuit Intense Man', 3200], ['Club de Nuit Preceiux', 3300], ['JPG Classique Women', 2200], ['JPG Le Beau', 2000], ['JPG Le Male Elixir', 3200],
+            ['JPG Le Parfum', 1500], ['JPG Ultra Male', 2100], ['Khadlaj Island Dunes', 1100], ['Khadlaj Island', 3000], ['Lattafa Asad Zanzibar', 4200], ['Lattafa Asad', 2280],
+            ['Lattafa Khamrah', 2900], ['Lattafa Oud for Glory', 1900], ['Lattafa', 1200], ['Liquid Brun', 3800], ['LV Imagination', 1600], ['LV Limmensite', 1200],
+            ['LV Pacific Chill', 3330], ['Shiyaaka Blue', 1990], ['Shiyaaka Snow', 3000], ['Supremacy Collector\'s Edition', 5200], ['Supremacy Not Only Intense', 2200], ['Vulcan Feu', 2900],
         ],
     ],
     'lights' => [
