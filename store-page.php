@@ -66,18 +66,40 @@ function peso(float $value): string
 </head>
 <body data-category="<?= htmlspecialchars($categoryKey) ?>">
   <main class="store-page">
-    <h1><?= htmlspecialchars($storeName) ?></h1>
+    <header class="site-header">
+      <div class="brand-row">
+        <span class="brand-mark" aria-hidden="true">SC</span>
+        <div class="brand-text">
+          <p class="brand-eyebrow">Online store</p>
+          <h1><?= htmlspecialchars($storeName) ?></h1>
+        </div>
+        <p class="category-pill"><?= htmlspecialchars($pageTitle) ?></p>
+      </div>
 
-    <section class="top-controls" aria-label="Product navigation">
-      <button class="search-button" type="button">SEARCH</button>
-      <select id="categorySelect" aria-label="Select product category">
-        <option value="" disabled>----------select product----------</option>
-        <option value="perfumes.php" <?= $categoryKey === 'perfumes' ? 'selected' : '' ?>>Perfumes</option>
-        <option value="local-bag-products.php" <?= $categoryKey === 'bags' ? 'selected' : '' ?>>Local Bag Products</option>
-        <option value="shoes.php" <?= $categoryKey === 'shoes' ? 'selected' : '' ?>>Shoes</option>
-        <option value="lights.php" <?= $categoryKey === 'lights' ? 'selected' : '' ?>>Lights</option>
-        <option value="index.php" <?= $categoryKey === 'kitchen' ? 'selected' : '' ?>>Kitchen Utensils</option>
-      </select>
+      <section class="top-controls" aria-label="Product navigation">
+        <button class="search-button" type="button">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+          Search
+        </button>
+        <label class="category-field">
+          <span>Category</span>
+          <select id="categorySelect" aria-label="Select product category">
+            <option value="" disabled>Select product</option>
+            <option value="perfumes.php" <?= $categoryKey === 'perfumes' ? 'selected' : '' ?>>Perfumes</option>
+            <option value="local-bag-products.php" <?= $categoryKey === 'bags' ? 'selected' : '' ?>>Local Bag Products</option>
+            <option value="shoes.php" <?= $categoryKey === 'shoes' ? 'selected' : '' ?>>Shoes</option>
+            <option value="lights.php" <?= $categoryKey === 'lights' ? 'selected' : '' ?>>Lights</option>
+            <option value="index.php" <?= $categoryKey === 'kitchen' ? 'selected' : '' ?>>Kitchen Utensils</option>
+          </select>
+        </label>
+      </section>
+    </header>
+
+    <section class="section-head" aria-label="<?= htmlspecialchars($pageTitle) ?> heading">
+      <div>
+        <h2 class="section-title"><?= htmlspecialchars($pageTitle) ?></h2>
+        <p class="section-subtitle"><?= count($category['products']) ?> products &middot; <?= htmlspecialchars($category['type']) ?> collection</p>
+      </div>
     </section>
 
     <section class="pic_group" aria-label="<?= htmlspecialchars($pageTitle) ?> products">
@@ -88,7 +110,7 @@ function peso(float $value): string
             <span class="image-placeholder" hidden>Image unavailable</span>
           </div>
           <div class="product-caption">
-            <span><?= htmlspecialchars($name) ?></span>
+            <span class="product-name"><?= htmlspecialchars($name) ?></span>
             <span class="product-price"><?= peso($price) ?></span>
           </div>
         </article>
@@ -96,38 +118,39 @@ function peso(float $value): string
     </section>
 
     <section class="checkout-section">
-      <form id="orderForm" class="order-details">
-        <h2>Order Details:</h2>
-        <label class="input_box">Name of an Item:<input id="itemName" type="text" readonly></label>
-        <label class="input_box">Quantity:<input id="quantity" type="number" min="1" step="1" inputmode="numeric"></label>
-        <label class="input_box">Price:<input id="price" type="text" readonly></label>
-        <label class="input_box">Discount Amount:<input id="discountAmount" type="text" readonly></label>
-        <label class="input_box">Discounted Amount:<input id="discountedAmount" type="text" readonly></label>
-        <label class="input_box">Total Quantity:<input id="totalQuantity" type="text" readonly></label>
-        <label class="input_box">Total Discount Given:<input id="totalDiscount" type="text" readonly></label>
-        <label class="input_box">Total Discounted Amount:<input id="totalAmount" type="text" readonly></label>
-        <label class="input_box">Cash Given:<input id="cashGiven" type="number" min="0" step="0.01" inputmode="decimal"></label>
-        <label class="input_box">Change:<input id="change" type="text" readonly></label>
+      <form id="orderForm" class="order-details card">
+        <h2>Order details</h2>
+        <p class="card-subtitle">Select a product above to fill this in automatically.</p>
+        <label class="input_box"><span>Name of item</span><input id="itemName" type="text" readonly placeholder="No item selected"></label>
+        <label class="input_box"><span>Quantity</span><input id="quantity" type="number" min="1" step="1" inputmode="numeric" placeholder="0"></label>
+        <label class="input_box"><span>Price</span><input id="price" type="text" readonly placeholder="P0.00"></label>
+        <label class="input_box"><span>Discount amount</span><input id="discountAmount" type="text" readonly placeholder="P0.00"></label>
+        <label class="input_box"><span>Discounted amount</span><input id="discountedAmount" type="text" readonly placeholder="P0.00"></label>
+        <label class="input_box"><span>Total quantity</span><input id="totalQuantity" type="text" readonly placeholder="0"></label>
+        <label class="input_box"><span>Total discount given</span><input id="totalDiscount" type="text" readonly placeholder="P0.00"></label>
+        <label class="input_box"><span>Total discounted amount</span><input id="totalAmount" type="text" readonly placeholder="P0.00"></label>
+        <label class="input_box"><span>Cash given</span><input id="cashGiven" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0.00"></label>
+        <label class="input_box total-row"><span>Change</span><input id="change" type="text" readonly placeholder="P0.00"></label>
       </form>
 
-      <section class="right-panel">
+      <section class="right-panel card">
         <fieldset class="discount-options">
-          <legend>Order Discount Options:</legend>
-          <label class="bundle_option"><input type="radio" name="discount" value="0.20"> Senior Citizen</label>
-          <label class="bundle_option"><input type="radio" name="discount" value="0.10"> With Disc. Card</label>
-          <label class="bundle_option"><input type="radio" name="discount" value="0.15"> Employee Disc.</label>
-          <label class="bundle_option"><input type="radio" name="discount" value="0" checked> No Discount</label>
+          <legend>Order discount options</legend>
+          <label class="bundle_option"><input type="radio" name="discount" value="0.20"><span>Senior Citizen &middot; 20%</span></label>
+          <label class="bundle_option"><input type="radio" name="discount" value="0.10"><span>With Disc. Card &middot; 10%</span></label>
+          <label class="bundle_option"><input type="radio" name="discount" value="0.15"><span>Employee Disc. &middot; 15%</span></label>
+          <label class="bundle_option"><input type="radio" name="discount" value="0" checked><span>No Discount</span></label>
         </fieldset>
 
         <div class="action-buttons">
-          <button id="calculateButton" class="btn_process" type="button">CALCULATE CHANGE</button>
-          <button id="newButton" class="btn_process" type="button">NEW</button>
-          <button id="saveButton" class="btn_process" type="button">SAVE</button>
-          <button id="updateButton" class="btn_process" type="button">UPDATE</button>
+          <button id="calculateButton" class="btn_process btn-primary" type="button">Calculate change</button>
+          <button id="newButton" class="btn_process" type="button">New</button>
+          <button id="saveButton" class="btn_process" type="button">Save</button>
+          <button id="updateButton" class="btn_process" type="button">Update</button>
         </div>
 
         <div class="keypad" aria-label="Numeric keypad">
-          <button class="enter-key" type="button" data-key="ENTER">ENTER</button>
+          <button class="enter-key" type="button" data-key="ENTER">Enter</button>
           <button type="button" data-key="/">/</button><button type="button" data-key="*">*</button><button type="button" data-key="-">-</button>
           <button type="button" data-key="+">+</button><button type="button" data-key="6">6</button><button type="button" data-key="7">7</button>
           <button type="button" data-key="8">8</button><button type="button" data-key="9">9</button><button type="button" data-key="2">2</button>
