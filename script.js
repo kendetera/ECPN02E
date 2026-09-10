@@ -110,4 +110,3 @@ document.getElementById('newButton').addEventListener('click', newOrder);
 document.querySelectorAll('.keypad button').forEach((button) => {
   button.addEventListener('click', () => keypadInput(button.dataset.key));
 });
-

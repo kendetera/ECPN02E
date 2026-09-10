@@ -3,6 +3,14 @@ $storeName = "SE-RI'S CHOICE STORE";
 $pageTitle = $pageTitle ?? 'Kitchen Utensils';
 $categoryKey = $categoryKey ?? 'kitchen';
 
+// No-JS category navigation: the dropdown form submits here via GET,
+// then we redirect to the chosen category page (allowlist-guarded).
+$categoryPages = ['index.php', 'perfumes.php', 'local-bag-products.php', 'shoes.php', 'lights.php'];
+if (isset($_GET['category']) && in_array($_GET['category'], $categoryPages, true)) {
+    header('Location: ' . $_GET['category']);
+    exit;
+}
+
 $catalog = [
     'kitchen' => [
         'type' => 'kitchen utensil',
@@ -64,13 +72,13 @@ function peso(float $value): string
   <title><?= htmlspecialchars($storeName) ?> - <?= htmlspecialchars($pageTitle) ?></title>
   <link rel="stylesheet" href="styles.css?v=<?= filemtime(__DIR__ . '/styles.css') ?>">
 </head>
-<body data-category="<?= htmlspecialchars($categoryKey) ?>">
+<body>
   <main class="store-page">
     <h1><?= htmlspecialchars($storeName) ?></h1>
 
-    <section class="top-controls" aria-label="Product navigation">
-      <button class="search-button" type="button">SEARCH</button>
-      <select id="categorySelect" aria-label="Select product category">
+    <form class="top-controls" method="get" action="" aria-label="Product navigation">
+      <button class="search-button" type="submit">SEARCH</button>
+      <select id="categorySelect" name="category" aria-label="Select product category">
         <option value="" disabled>----------select product----------</option>
         <option value="perfumes.php" <?= $categoryKey === 'perfumes' ? 'selected' : '' ?>>Perfumes</option>
         <option value="local-bag-products.php" <?= $categoryKey === 'bags' ? 'selected' : '' ?>>Local Bag Products</option>
@@ -78,11 +86,11 @@ function peso(float $value): string
         <option value="lights.php" <?= $categoryKey === 'lights' ? 'selected' : '' ?>>Lights</option>
         <option value="index.php" <?= $categoryKey === 'kitchen' ? 'selected' : '' ?>>Kitchen Utensils</option>
       </select>
-    </section>
+    </form>
 
     <section class="pic_group" aria-label="<?= htmlspecialchars($pageTitle) ?> products">
       <?php foreach ($category['products'] as $index => [$name, $price]): ?>
-        <article class="pic_option" tabindex="0" role="button" data-name="<?= htmlspecialchars($name) ?>" data-price="<?= $price ?>">
+        <div class="pic_option" tabindex="0" role="button" data-name="<?= htmlspecialchars($name) ?>" data-price="<?= $price ?>">
           <div class="image-box">
             <img class="product-image" src="images/<?= htmlspecialchars($categoryKey) ?>/product-<?= $index + 1 ?>.png" alt="<?= htmlspecialchars($name . ' ' . $category['type']) ?>">
             <span class="image-placeholder" hidden>Image unavailable</span>
@@ -91,7 +99,7 @@ function peso(float $value): string
             <span><?= htmlspecialchars($name) ?></span>
             <span class="product-price"><?= peso($price) ?></span>
           </div>
-        </article>
+        </div>
       <?php endforeach; ?>
     </section>
 

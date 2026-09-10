@@ -190,6 +190,10 @@ h2,
 }
 
 button { cursor: pointer; }
+button:disabled {
+  cursor: not-allowed;
+  opacity: .65;
+}
 
 @media (max-width: 780px) {
   .pic_group { grid-template-columns: repeat(3, minmax(0, 1fr)); }
