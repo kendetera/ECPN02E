@@ -104,27 +104,29 @@ function peso(float $value): string
     </section>
 
     <section class="checkout-section">
-      <form id="orderForm" class="order-details">
+      <form id="orderForm" class="order-details" method="post" action="calculate.php">
         <h2>Order Details:</h2>
         <label class="input_box">Name of an Item:<input id="itemName" type="text" readonly></label>
-        <label class="input_box">Quantity:<input id="quantity" type="number" min="1" step="1" inputmode="numeric"></label>
+        <label class="input_box">Quantity:<input id="quantity" name="quantity" type="number" min="1" step="1" inputmode="numeric" autocomplete="off"></label>
         <label class="input_box">Price:<input id="price" type="text" readonly></label>
+        <input id="rawPrice" name="price" type="hidden">
         <label class="input_box">Discount Amount:<input id="discountAmount" type="text" readonly></label>
         <label class="input_box">Discounted Amount:<input id="discountedAmount" type="text" readonly></label>
         <label class="input_box">Total Quantity:<input id="totalQuantity" type="text" readonly></label>
         <label class="input_box">Total Discount Given:<input id="totalDiscount" type="text" readonly></label>
         <label class="input_box">Total Discounted Amount:<input id="totalAmount" type="text" readonly></label>
-        <label class="input_box">Cash Given:<input id="cashGiven" type="number" min="0" step="0.01" inputmode="decimal"></label>
+        <label class="input_box">Cash Given:<input id="cashGiven" name="cashGiven" type="text" inputmode="decimal" autocomplete="off"></label>
         <label class="input_box">Change:<input id="change" type="text" readonly></label>
+        <p id="calculationStatus" class="calculation-status" role="status" aria-live="polite"></p>
       </form>
 
       <section class="right-panel">
         <fieldset class="discount-options">
           <legend>Order Discount Options:</legend>
-          <label class="bundle_option"><input type="radio" name="discount" value="0.20"> Senior Citizen</label>
-          <label class="bundle_option"><input type="radio" name="discount" value="0.10"> With Disc. Card</label>
-          <label class="bundle_option"><input type="radio" name="discount" value="0.15"> Employee Disc.</label>
-          <label class="bundle_option"><input type="radio" name="discount" value="0" checked> No Discount</label>
+          <label class="bundle_option"><input type="radio" name="discount" value="0.20" form="orderForm"> Senior Citizen</label>
+          <label class="bundle_option"><input type="radio" name="discount" value="0.10" form="orderForm"> With Disc. Card</label>
+          <label class="bundle_option"><input type="radio" name="discount" value="0.15" form="orderForm"> Employee Disc.</label>
+          <label class="bundle_option"><input type="radio" name="discount" value="0" form="orderForm" checked> No Discount</label>
         </fieldset>
 
         <div class="action-buttons">
@@ -145,6 +147,6 @@ function peso(float $value): string
       </section>
     </section>
   </main>
-  <script src="script.js"></script>
+  <script src="script.js?v=<?= filemtime(__DIR__ . '/script.js') ?>"></script>
 </body>
 </html>

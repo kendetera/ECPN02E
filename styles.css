@@ -138,6 +138,13 @@ h2,
 
 .input_box input[readonly] { background: #f1f1f1; }
 
+.calculation-status {
+  min-height: 18px;
+  margin: 4px 0 0;
+  color: #b42318;
+  font-size: 12px;
+}
+
 .discount-options {
   display: flex;
   flex-wrap: wrap;
@@ -182,6 +189,12 @@ h2,
   background: #343a40;
   color: #fff;
   font-size: 15px;
+}
+
+.keypad button:focus-visible,
+.btn_process:focus-visible {
+  outline: 3px solid rgba(22, 135, 217, .35);
+  outline-offset: 1px;
 }
 
 .keypad .enter-key {
