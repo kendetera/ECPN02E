@@ -104,7 +104,7 @@ function peso(float $value): string
     </section>
 
     <section class="checkout-section">
-      <form id="orderForm" class="order-details" method="post" action="calculate.php">
+      <form id="orderForm" class="order-details" method="post" action="calculate_change.php">
         <h2>Order Details:</h2>
         <label class="input_box">Name of an Item:<input id="itemName" type="text" readonly></label>
         <label class="input_box">Quantity:<input id="quantity" name="quantity" type="number" min="1" step="1" inputmode="numeric" autocomplete="off"></label>

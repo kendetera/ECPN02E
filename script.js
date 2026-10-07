@@ -147,7 +147,7 @@ document.querySelectorAll('.keypad button').forEach((button) => {
     }
 
     if (key === 'ENTER') {
-      if (evaluateKeypadOperation()) calculateOrder();
+      if (evaluateKeypadOperation()) calculateChange();
       return;
     }
 
@@ -166,20 +166,29 @@ document.querySelectorAll('.keypad button').forEach((button) => {
   });
 });
 
-async function calculateOrder() {
+function displayCalculation(result, includeChange = false) {
+  const fieldsToDisplay = includeChange ? resultFields : resultFields.filter((id) => id !== 'change');
+
+  fieldsToDisplay.forEach((id) => {
+    const value = result[id];
+    document.getElementById(id).value = value === null
+      ? ''
+      : id === 'totalQuantity' ? String(value) : peso(value);
+  });
+}
+
+async function requestCalculation(endpoint) {
   if (keypadOperation && !startNewNumber && !evaluateKeypadOperation()) return;
 
   if (!document.getElementById('rawPrice').value) {
     showStatus('Select a product first.');
-    return;
+    return null;
   }
 
-  const calculateButton = document.getElementById('calculateButton');
-  calculateButton.disabled = true;
   showStatus('Calculating...');
 
   try {
-    const response = await fetch(orderForm.action, {
+    const response = await fetch(endpoint, {
       method: 'POST',
       body: new FormData(orderForm),
       headers: { Accept: 'application/json' }
@@ -188,20 +197,35 @@ async function calculateOrder() {
 
     if (!response.ok) throw new Error(result.error || 'The calculation could not be completed.');
 
-    resultFields.forEach((id) => {
-      const value = result[id];
-      document.getElementById(id).value = value === null
-        ? ''
-        : id === 'totalQuantity' ? String(value) : peso(value);
-    });
+    return result;
+  } catch (error) {
+    showStatus(error.message);
+    return null;
+  }
+}
 
-    if (result.change !== null && result.change < 0) {
+async function calculatePay() {
+  const result = await requestCalculation('calculate_pay.php');
+  if (!result) return;
+
+  displayCalculation(result);
+  showStatus('');
+}
+
+async function calculateChange() {
+  const calculateButton = document.getElementById('calculateButton');
+  calculateButton.disabled = true;
+
+  try {
+    const result = await requestCalculation(orderForm.action);
+    if (!result) return;
+
+    displayCalculation(result, true);
+    if (result.change < 0) {
       showStatus(`Cash is short by ${peso(Math.abs(result.change))}.`);
     } else {
       showStatus('');
     }
-  } catch (error) {
-    showStatus(error.message);
   } finally {
     calculateButton.disabled = false;
   }
@@ -209,15 +233,15 @@ async function calculateOrder() {
 
 orderForm.addEventListener('submit', (event) => {
   event.preventDefault();
-  calculateOrder();
+  calculateChange();
 });
 
-document.getElementById('calculateButton').addEventListener('click', calculateOrder);
+document.getElementById('calculateButton').addEventListener('click', calculateChange);
 
 document.querySelectorAll('input[name="discount"]').forEach((radio) => {
   radio.addEventListener('change', () => {
     clearResults();
-    if (document.getElementById('rawPrice').value && quantityInput.value) calculateOrder();
+    if (document.getElementById('rawPrice').value && quantityInput.value) calculatePay();
   });
 });
 
