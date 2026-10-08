@@ -1,5 +1,5 @@
 <?php
 $pageTitle = 'Shoes';
 $categoryKey = 'shoes';
-require 'store-page.php';
+require __DIR__ . '/store-page.php';
 

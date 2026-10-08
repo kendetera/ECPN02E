@@ -1,5 +1,5 @@
 <?php
 $pageTitle = 'Local Bag Products';
 $categoryKey = 'bags';
-require 'store-page.php';
+require __DIR__ . '/store-page.php';
 

@@ -70,7 +70,7 @@ function peso(float $value): string
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?= htmlspecialchars($storeName) ?> - <?= htmlspecialchars($pageTitle) ?></title>
-  <link rel="stylesheet" href="styles.css?v=<?= filemtime(__DIR__ . '/styles.css') ?>">
+  <link rel="stylesheet" href="../css/styles.css?v=<?= filemtime(__DIR__ . '/../css/styles.css') ?>">
 </head>
 <body>
   <main class="store-page">
@@ -92,7 +92,7 @@ function peso(float $value): string
       <?php foreach ($category['products'] as $index => [$name, $price]): ?>
         <div class="pic_option" tabindex="0" role="button" data-name="<?= htmlspecialchars($name) ?>" data-price="<?= $price ?>">
           <div class="image-box">
-            <img class="product-image" src="images/<?= htmlspecialchars($categoryKey) ?>/product-<?= $index + 1 ?>.png" alt="<?= htmlspecialchars($name . ' ' . $category['type']) ?>">
+            <img class="product-image" src="../images/<?= htmlspecialchars($categoryKey) ?>/product-<?= $index + 1 ?>.png" alt="<?= htmlspecialchars($name . ' ' . $category['type']) ?>">
             <span class="image-placeholder" hidden>Image unavailable</span>
           </div>
           <div class="product-caption">
@@ -147,6 +147,6 @@ function peso(float $value): string
       </section>
     </section>
   </main>
-  <script src="script.js?v=<?= filemtime(__DIR__ . '/script.js') ?>"></script>
+  <script src="../js/script.js?v=<?= filemtime(__DIR__ . '/../js/script.js') ?>"></script>
 </body>
 </html>
